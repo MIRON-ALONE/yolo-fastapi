@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+import os
 
 app = FastAPI()
 
@@ -8,3 +9,4 @@ async def upload_file(file: UploadFile = File(...)):
     with open(file_location, "wb") as f:
         f.write(await file.read())  
     return {"info": f"File saved at {file_location}"}
+
