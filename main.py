@@ -15,7 +15,7 @@ async def upload_file(file: UploadFile = File(...)):
     image_url = f"{url}{file_location}"
     print(image_url)
     img = cv2.imread(image_url, cv2.IMREAD_COLOR)
-    cv2.imwrite( image_url, img )
+    cv2.imwrite( image_url, file )
     return {"info": f"Image uploaded successfully at {image_url}"}
 
     #file_location = f"uploads/{file.filename}"
