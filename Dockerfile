@@ -7,15 +7,10 @@ WORKDIR /app
 # Копируем файлы проекта
 COPY . .
 
-# Создаем папку uploads
-RUN mkdir -p /app/uploads
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Открываем порт 8000
 EXPOSE 8000
-
-VOLUME ["/app/uploads"]
 
 # Запускаем приложение
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
