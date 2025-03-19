@@ -7,6 +7,8 @@ WORKDIR /app
 # Копируем файлы проекта
 COPY . .
 
+RUN mkdir -p /app/uploads
+
 # Устанавливаем зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
