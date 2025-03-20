@@ -4,5 +4,4 @@ python-multipart
 ultralytics
 opencv-python
 pillow
-numpy
-OpenGL
+PyOpenGL
