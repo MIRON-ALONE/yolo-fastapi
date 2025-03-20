@@ -2,11 +2,11 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 import shutil
 import os
-from ultralytics import YOLO
+#from ultralytics import YOLO
 import cv2
 
 app = FastAPI()
-model = YOLO("yolo11n.yaml")
+#model = YOLO("yolo11n.yaml")
 url = os.getenv("REQUEST_URL")
 
 
@@ -29,9 +29,10 @@ async def upload_and_analize(file: UploadFile = File(...)):
     with open(file_location, "wb") as buffer:      
         shutil.copyfileobj(file.file, buffer)
     image = cv2.imread(file_location)
+    print(f"{image}")
     print("image os.imread successfully")
-    results = model(image)
-    print(f"{results}")
+    #results = model(image)
+    #print(f"{results}")
     #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")

@@ -7,8 +7,6 @@ WORKDIR /app
 # Копируем файлы проекта
 COPY . .
 
-RUN apt-get update && apt-get install libgl1
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Открываем порт 8000

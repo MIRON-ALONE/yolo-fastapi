@@ -3,5 +3,3 @@ uvicorn
 python-multipart
 ultralytics
 opencv-python-headless
-pillow
-PyOpenGL
