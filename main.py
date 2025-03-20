@@ -32,9 +32,9 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print("image os.imread successfully")
     results = model(image)
     print(f"{results}")
-    result_file =  os.path.join(UPLOAD_DIR, results)
-    cv2.imwrite(result_file, results)
-    print("image saved")
+    #result_file =  os.path.join(UPLOAD_DIR, results)
+    #cv2.imwrite(result_file, results)
+    #print("image saved")
     return {"filename": file.filename, "url": f"/files/{file.filename}"}
 
 
