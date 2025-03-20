@@ -4,6 +4,9 @@ FROM python:3.11
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
+# Устанавливаем зависимости системы, включая OpenGL
+RUN apt-get update && apt-get install -y libgl1-mesa-glx ffmpeg libsm6 libxext6
+
 # Копируем файлы проекта
 COPY . .
 
