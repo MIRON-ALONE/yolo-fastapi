@@ -2,11 +2,11 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 import shutil
 import os
-#from ultralytics import YOLO
+from ultralytics import YOLO
 import cv2
 
 app = FastAPI()
-#model = YOLO("yolo11n.yaml")
+model = YOLO(model="yolo11n.yaml")
 url = os.getenv("REQUEST_URL")
 
 
