@@ -12,6 +12,8 @@ url = os.getenv("REQUEST_URL")
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+RESULT_DIR = "runs/detect/predict"
+os.makedirs(RESULT_DIR, exist_ok=True)
 
 
 
