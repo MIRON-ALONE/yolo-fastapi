@@ -12,8 +12,6 @@ url = os.getenv("REQUEST_URL")
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
-RESULT_DIR = "runs/detect/predict"
-os.makedirs(RESULT_DIR, exist_ok=True)
 
 
 
@@ -35,8 +33,10 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print("image os.imread successfully")
     results = model(image)
     print(f"{results}")
-    print("Словарь классов:", model.names)
-    #result_file =  os.path.join(UPLOAD_DIR, results)
+    result = results[0]  
+    print(f"result.path: {result.path}")
+
+      #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
     return {"filename": file.filename, "url": f"/files/{file.filename}"}
@@ -44,6 +44,3 @@ async def upload_and_analize(file: UploadFile = File(...)):
 
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
-app.mount("/predicts", StaticFiles(directory="runs/detect/predict"), name="predicts")
-
-
