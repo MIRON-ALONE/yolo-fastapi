@@ -37,7 +37,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     result = results[0]  
     result_path = os.path.join(result.save_dir, result.path)
     print(f"result_path: {result_path}")
-    return FileResponse(path=result.path)
+    return FileResponse(path=result_path)
       #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
