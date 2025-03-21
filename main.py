@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import shutil
 import os
@@ -34,12 +35,13 @@ async def upload_and_analize(file: UploadFile = File(...)):
     results = model(image)
     print(f"{results}")
     result = results[0]  
-    print(f"result.path: {result.path}")
-
+    result_path = os.path.join(result.save_dir, result.path)
+    print(f"result_path: {result_path}")
+    return FileResponse(path=result.path)
       #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
-    return {"filename": file.filename, "url": f"/files/{file.filename}"}
+    #return {"filename": file.filename, "url": f"/files/{file.filename}"}
 
 
 
