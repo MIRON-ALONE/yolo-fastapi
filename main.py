@@ -33,6 +33,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print("image os.imread successfully")
     results = model(image)
     print(f"{results}")
+    print("Словарь классов:", model.names)
     #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
@@ -41,6 +42,6 @@ async def upload_and_analize(file: UploadFile = File(...)):
 
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
-
+app.mount("/predicts", StaticFiles(directory="runs/detect/predict"), name="predicts")
 
 
