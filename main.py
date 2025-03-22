@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import shutil
 import os
@@ -34,12 +34,14 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print(f"{image}")
     print("image os.imread successfully")
     results = model(image)
-    print(f"{results}")
-    result = results[0]
-    print(f"this is result: {result}")  
-    result_path = os.path.join(result.save_dir, result.path)
+    print(f"this is result: {results}")  
+    result_path = os.path.join(results.save_dir, results.path)
     print(f"result_path: {result_path}")
-    return FileResponse(path=result_path)
+    if not os.path.exists(result_path):
+     return JSONResponse({"error": f"File {result_path} not found"}, status_code=500)
+    with open(result_path, "rb") as f:
+     return Response(f.read(), media_type="image/jpeg")
+    #return FileResponse(path=result_path)
     #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
