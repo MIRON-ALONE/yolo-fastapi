@@ -36,7 +36,9 @@ async def upload_and_analize(file: UploadFile = File(...)):
     results = model(image)
     print(f"this is result: {results}") 
     print(f"Type of results: {type(results)}")
-    print(f"this is a save dir: {model(image).save_dir}") 
+    print(f"this is a save dir: {results.save_dir}") 
+    result_image = cv2.imread(results[6], image)
+    print(f"this is a result_image: {result_image}")
     result_path = os.path.join(results.save_dir, results.path)
     print(f"result_path: {result_path}")
     with open(result_path, "rb") as f:
