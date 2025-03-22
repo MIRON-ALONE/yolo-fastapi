@@ -34,7 +34,8 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print(f"{image}")
     print("image os.imread successfully")
     results = model(image)
-    print(f"this is result: {results}")  
+    print(f"this is result: {results}") 
+    print(f"this is a save dir: {results.save_dir}") 
     result_path = os.path.join(results.save_dir, results.path)
     print(f"result_path: {result_path}")
     with open(result_path, "rb") as f:
