@@ -37,8 +37,6 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print(f"this is result: {results}")  
     result_path = os.path.join(results.save_dir, results.path)
     print(f"result_path: {result_path}")
-    if not os.path.exists(result_path):
-     return JSONResponse({"error": f"File {result_path} not found"}, status_code=500)
     with open(result_path, "rb") as f:
      return Response(f.read(), media_type="image/jpeg")
     #return FileResponse(path=result_path)
