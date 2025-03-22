@@ -11,6 +11,7 @@ model = YOLO(model="yolo11n.yaml")
 url = os.getenv("REQUEST_URL")
 
 
+
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -34,11 +35,12 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print("image os.imread successfully")
     results = model(image)
     print(f"{results}")
-    result = results[0]  
+    result = results[0]
+    print(f"this is result: {result}")  
     result_path = os.path.join(result.save_dir, result.path)
     print(f"result_path: {result_path}")
     return FileResponse(path=result_path)
-      #result_file =  os.path.join(UPLOAD_DIR, results)
+    #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
     #return {"filename": file.filename, "url": f"/files/{file.filename}"}
