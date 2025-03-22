@@ -5,6 +5,7 @@ import shutil
 import os
 from ultralytics import YOLO
 import cv2
+import json
 
 app = FastAPI()
 model = YOLO(model="yolo11n.yaml")
@@ -34,7 +35,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     #print(f"{image}")
     #print("image os.imread successfully")
     results = model.predict(image)
-    result = results[0]
+    result =  json.dumps(results)
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
     print(f"---save dir---: {result.save_dir}")
