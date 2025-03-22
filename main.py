@@ -34,10 +34,11 @@ async def upload_and_analize(file: UploadFile = File(...)):
     #print(f"{image}")
     #print("image os.imread successfully")
     results = model.predict(image)
-    print(f"this is result: {results}") 
-    print(f"Type of results: {type(results)}") 
-    print(f"---save dir---: {results.save_dir}")
-    print(f"---results path---: {results.results_path}")
+    result = results[0]
+    print(f"this is result: {result}") 
+    print(f"Type of results: {type(result)}") 
+    print(f"---save dir---: {result.save_dir}")
+    print(f"---results path---: {result.results_path}")
     #result_path = os.path.join(results.save_dir, results.path)
     #print(f"result_path: {result_path}")
     #with open(result_path, "rb") as f:
