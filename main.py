@@ -9,7 +9,7 @@ import cv2
 
 app = FastAPI()
 model = YOLO(model="yolov8n-cls.pt")
-results = model.train(data="coco128.yaml", epochs=3)
+results = model.train(data="coco128.yaml", epochs=100, imgsz=640)
 url = os.getenv("REQUEST_URL")
 
 
