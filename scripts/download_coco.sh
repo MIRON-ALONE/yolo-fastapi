@@ -1,23 +1,17 @@
-#!/bin/bash
 set -e  # Останавливаем скрипт при ошибке
 
-DATASET_DIR="/app/datasets/coco128"
-CONFIG_FILE="/app/datasets/coco128.yaml"
+DATASET_DIR="/app/datasets"
+ZIP_FILE="$DATASET_DIR/coco128.zip"
 
 # Создаем папку для датасетов
-mkdir -p /app/datasets
+mkdir -p "$DATASET_DIR"
 
-# Если датасет отсутствует, скачиваем
-if [ ! -f "$CONFIG_FILE" ]; then
-    echo "⚡️ COCO128 dataset not found. Downloading..."
-    wget -O /app/datasets/coco128.yaml https://ultralytics.com/assets/coco128.yaml
+# Если архив с датасетом отсутствует, скачиваем
+if [ ! -f "$ZIP_FILE" ]; then
+    echo "⚡️ COCO128 dataset zip file not found. Downloading..."
+    wget -O "$ZIP_FILE" https://ultralytics.com/assets/coco128.zip
 
-    mkdir -p "$DATASET_DIR"
-    wget -O /app/datasets/coco128.zip https://ultralytics.com/assets/coco128.zip
-    unzip /app/datasets/coco128.zip -d /app/datasets/
-    rm /app/datasets/coco128.zip  # Удаляем архив после распаковки
-
-    echo "✅ COCO128 dataset successfully downloaded."
+    echo "✅ COCO128 dataset zip file successfully downloaded."
 else
-    echo "✅ COCO128 dataset already exists. Skipping download."
+    echo "✅ COCO128 dataset zip file already exists. Skipping download."
 fi
