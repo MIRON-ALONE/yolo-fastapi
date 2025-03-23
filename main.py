@@ -16,7 +16,6 @@ print("training were successful")
 url = os.getenv("REQUEST_URL")
 
 cropper = solutions.ObjectCropper(
-    show=True,
     model="yolo11n.pt", 
     classes=[1, 2],  
     crop_dir="app/uploads",  # Папка для сохраненных объектов
