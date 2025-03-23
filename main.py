@@ -8,7 +8,7 @@ import cv2
 
 app = FastAPI()
 settings.update({"datasets_dir": "/app/datasets/coco/images/train2017"})
-model = YOLO(model="yolov8n-cls.pt")
+model = YOLO(model="yolo11n.pt")
 #model = YOLO("runs/detect/train/weights/best.pt")
 if __name__ == "__main__":
     results = model.train(data="/app/datasets/coco/images/train2017", epochs=100, imgsz=640)
