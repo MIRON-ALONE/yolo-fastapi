@@ -31,7 +31,7 @@ def convert_label(path, lb_path, year, image_id):
             out_file.write(" ".join(str(a) for a in (cls_id, *bb)) + "\n")
 
 def convert_data():
-    dir = Path("/app/datasets")  # root dir
+    dir = Path("/app/datasets/VOC")  # root dir
 
     # Конвертация данных
     path = dir / "images/VOCdevkit"
