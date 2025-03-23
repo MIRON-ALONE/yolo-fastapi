@@ -42,26 +42,15 @@ async def upload_and_analize(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
     image = cv2.imread(file_location)
     #print(f"{image}")
-    #print("image os.imread successfully")
     results = model.predict(image, save=True, conf=0.01)
     result =  results[0].plot
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
     results = cropper(image)
+    print(f"Results: {results}")
    
     # Возвращаем ссылку на итоговое изображение
     return {"filename": file.filename, "url": "app/uploads"}
 
-    #print(f"---save dir---: {result.save_dir}")
-    #print(f"---results path---: {result.results_path}")
-    #result_path = os.path.join(results.save_dir, results.path)
-    #print(f"result_path: {result_path}")
-    #with open(result_path, "rb") as f:
-    # return Response(f.read(), media_type="image/jpeg")
-    #return FileResponse(path=result_path)
-    #result_file =  os.path.join(UPLOAD_DIR, results)
-    #cv2.imwrite(result_file, results)
-    #print("image saved")
-    #return {"filename": file.filename, "url": f"/files/{file.filename}"}
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
