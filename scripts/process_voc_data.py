@@ -30,16 +30,8 @@ def convert_label(path, lb_path, year, image_id):
             cls_id = names.index(cls)  # class id
             out_file.write(" ".join(str(a) for a in (cls_id, *bb)) + "\n")
 
-def download_and_convert_data():
+def convert_data():
     dir = Path("/app/datasets")  # root dir
-
-    # Скачивание и распаковка файлов
-    urls = [
-        "https://github.com/ultralytics/assets/releases/download/v0.0.0/VOCtrainval_06-Nov-2007.zip",  # 446MB
-        "https://github.com/ultralytics/assets/releases/download/v0.0.0/VOCtest_06-Nov-2007.zip",  # 438MB
-        "https://github.com/ultralytics/assets/releases/download/v0.0.0/VOCtrainval_11-May-2012.zip",  # 1.95GB
-    ]
-    download(urls, dir=dir / "images", curl=True, threads=3, exist_ok=True)  # скачивание и распаковка
 
     # Конвертация данных
     path = dir / "images/VOCdevkit"
@@ -58,4 +50,4 @@ def download_and_convert_data():
             convert_label(path, lb_path, year, id)  # convert labels to YOLO format
 
 if __name__ == "__main__":
-    download_and_convert_data()
+    convert_data()
