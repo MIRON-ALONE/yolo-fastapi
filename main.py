@@ -18,7 +18,7 @@ url = os.getenv("REQUEST_URL")
 cropper = solutions.ObjectCropper(
     model="yolo11n.pt", 
     classes=[1, 2],  
-    crop_dir="app/uploads",  # Папка для сохраненных объектов
+    crop_dir="uploads",  # Папка для сохраненных объектов
 )
 
 
@@ -50,7 +50,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     results = cropper(image)
    
     # Возвращаем ссылку на итоговое изображение
-    return {"filename": file.filename, "url": "{app/uploads}"}
+    return {"filename": file.filename, "url": "app/uploads"}
 
     #print(f"---save dir---: {result.save_dir}")
     #print(f"---results path---: {result.results_path}")
