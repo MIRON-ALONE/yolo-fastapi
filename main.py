@@ -56,7 +56,14 @@ async def list_files():
     """Возвращает список файлов в папке uploads."""
     try:
         files = [f for f in os.listdir(UPLOAD_DIR) if os.path.isfile(os.path.join(UPLOAD_DIR, f))]
-        return {"files": files}
+        file_urls = [
+            f"https://yolo-fastapi-production.up.railway.app/uploads/{file}"
+            for file in files
+        ]
+        
+        # Возвращаем ссылки на файлы
+        return {"files": file_urls}
+    
     except FileNotFoundError:
         return {"error": "Папка не найдена"}
 
