@@ -8,7 +8,7 @@ import cv2
 
 
 app = FastAPI()
-model = YOLO(model="yolo11n.yaml")
+model = YOLO(model="yolov8n-cls.pt")
 results = model.train(data="coco128.yaml", epochs=3)
 url = os.getenv("REQUEST_URL")
 
@@ -35,7 +35,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     image = cv2.imread(file_location)
     #print(f"{image}")
     #print("image os.imread successfully")
-    results = model.predict(image)
+    results = model.predict(image, save=True)
     result =  results[0].plot
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
