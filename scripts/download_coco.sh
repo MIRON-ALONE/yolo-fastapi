@@ -1,6 +1,6 @@
 set -e  # Останавливаем скрипт при ошибке
 
-DATASET_DIR="/app/datasets"
+DATASET_DIR="/datasets"
 ZIP_FILE="$DATASET_DIR/coco128.zip"
 
 # Создаем папку для датасетов

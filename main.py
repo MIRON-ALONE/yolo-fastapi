@@ -10,7 +10,7 @@ import cv2
 app = FastAPI()
 model = YOLO(model="yolov8n-cls.pt")
 results = model.train(data="datasets/coco128/images/train2017", epochs=100, imgsz=640)
-print["training were successful"]
+print("training were successful")
 url = os.getenv("REQUEST_URL")
 
 
