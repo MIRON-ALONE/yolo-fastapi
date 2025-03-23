@@ -17,9 +17,9 @@ COPY . .
 RUN mkdir -p /app/datasets
 
 
-RUN wget --no-check-certificate -O /app/datasets/coco128.zip https://github.com/ultralytics/assets/releases/download/v0.0.0/coco128.zip \
-    && unzip /app/datasets/coco128.zip -d /app/datasets/ \
-    && rm /app/datasets/coco128.zip
+#RUN wget --no-check-certificate -O /app/datasets/coco128.zip https://github.com/ultralytics/assets/releases/download/v0.0.0/coco128.zip \
+#    && unzip /app/datasets/coco128.zip -d /app/datasets/ \
+#    && rm /app/datasets/coco128.zip
 
 
 # Открываем порт 8000

@@ -10,7 +10,11 @@ app = FastAPI()
 settings.update({"datasets_dir": "/app/datasets/coco128/images/train2017"})
 model = YOLO(model="yolov8n-cls.pt")
 if __name__ == "__main__":
-    results = model.train(data="/app/datasets/coco128/images/train2017", epochs=100, imgsz=640)
+    results = model.train(data="/app/datasets/coco/images/train2017", epochs=100, imgsz=640)
+metrics = model.val(data="/app/datasets/coco/images/val2017.txt")
+print("---metrics---")
+print(metrics.box.map)
+print("---")
 print("training were successful")
 url = os.getenv("REQUEST_URL")
 
