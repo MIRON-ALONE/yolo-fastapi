@@ -50,7 +50,27 @@ async def upload_and_analize(file: UploadFile = File(...)):
         xyxyn = result.boxes.xyxyn  # normalized
         names = [result.names[cls.item()] for cls in result.boxes.cls.int()]  # class name of each box
         confs = result.boxes.conf 
+
         print(f"---confs---: {confs}") # confidence score of each box
+
+    for result in results:
+        for box in result.boxes:
+            x1, y1, x2, y2 = box.xyxy.int().tolist()
+            class_name = result.names[int(box.cls)]
+            confidence = box.conf
+            label = f"{class_name} {confidence:.2f}"
+
+            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(image, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+    # Сохраняем итоговое изображение
+    output_path = os.path.join(UPLOAD_DIR, "output.jpg")
+    cv2.imwrite(output_path, image)
+    print("Image saved successfully")
+
+    # Возвращаем ссылку на итоговое изображение
+    return {"filename": file.filename, "url": f"/files/output.jpg"}
+
     #print(f"---save dir---: {result.save_dir}")
     #print(f"---results path---: {result.results_path}")
     #result_path = os.path.join(results.save_dir, results.path)
@@ -61,8 +81,6 @@ async def upload_and_analize(file: UploadFile = File(...)):
     #result_file =  os.path.join(UPLOAD_DIR, results)
     #cv2.imwrite(result_file, results)
     #print("image saved")
-    return {"filename": file.filename, "url": f"/files/{file.filename}"}
-
-
+    #return {"filename": file.filename, "url": f"/files/{file.filename}"}
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
