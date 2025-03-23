@@ -31,17 +31,17 @@ def convert_label(path, lb_path, year, image_id):
             out_file.write(" ".join(str(a) for a in (cls_id, *bb)) + "\n")
 
 def convert_data():
-    dir = Path("/app/datasets/VOC")  # root dir
+    dir = Path("/app/datasets/")  # root dir
 
     # Конвертация данных
     path = dir / "images/VOCdevkit"
-    for year, image_set in [("2012", "train"), ("2012", "val"), ("2007", "train"), ("2007", "val"), ("2007", "test")]:
+    for year, image_set in [("2007", "val"), ("2007", "test")]:
         imgs_path = dir / "images" / f"{image_set}{year}"
         lbs_path = dir / "labels" / f"{image_set}{year}"
         imgs_path.mkdir(exist_ok=True, parents=True)
         lbs_path.mkdir(exist_ok=True, parents=True)
 
-        with open(path / f"VOC{year}/ImageSets/Main/{image_set}.txt") as f:
+        with open(path / f"VOCtrainval_06-Nov-2007/ImageSets/Main/{image_set}.txt") as f:
             image_ids = f.read().strip().split()
         for id in tqdm(image_ids, desc=f"{image_set}{year}"):
             f = path / f"VOC{year}/JPEGImages/{id}.jpg"  # old img path
