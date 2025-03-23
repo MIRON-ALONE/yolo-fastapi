@@ -48,9 +48,19 @@ async def upload_and_analize(file: UploadFile = File(...)):
     print(f"Type of results: {type(result)}") 
     results = cropper(image)
     print(f"Results: {results}")
-   
-    # Возвращаем ссылку на итоговое изображение
+
+ # Возвращаем ссылку на итоговое изображение
     return {"filename": file.filename, "url": "app/uploads"}
+
+@app.get("/files/")
+async def list_files():
+    """Возвращает список файлов в папке uploads."""
+    try:
+        files = os.listdir(UPLOAD_DIR)  # Получаем список файлов
+        return {"files": files}
+    except FileNotFoundError:
+        return {"error": "Папка не найдена"}
+   
 
 
 app.mount("/files", StaticFiles(directory=UPLOAD_DIR), name="files")
