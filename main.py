@@ -7,10 +7,13 @@ from ultralytics import YOLO, settings
 import cv2
 
 app = FastAPI()
-settings.update({"datasets_dir": "/app/datasets/coco128/images/train2017"})
+settings.update({"datasets_dir": "/app/datasets/"})
+train_data_path = "/app/datasets/images/VOCdevkit/VOC2007/train"
+val_data_path = "/app/datasets/images/VOCdevkit/VOC2007/val"
+
 model = YOLO(model="yolov8n-cls.pt")
 if __name__ == "__main__":
-    results = model.train(data="/app/datasets/coco128/images/train2017", epochs=100, imgsz=640)
+    results = model.train(data={"train": train_data_path, "val": val_data_path}, epochs=100, imgsz=640)
 print("training were successful")
 url = os.getenv("REQUEST_URL")
 

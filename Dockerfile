@@ -5,7 +5,7 @@ FROM python:3.11
 WORKDIR /app
 
 # Устанавливаем зависимости системы, включая OpenGL
-RUN apt-get update && apt-get install -y libgl1-mesa-glx ffmpeg libsm6 libxext6
+RUN apt-get update && apt-get install -y libgl1-mesa-glx ffmpeg libsm6 libxext6 wget unzip
 
 COPY requirements.txt .
 
@@ -16,11 +16,12 @@ COPY . .
 
 RUN mkdir -p /app/datasets
 
+RUN wget --no-check-certificate -O /app/datasets/VOCtrainval_06-Nov-2007.zip https://github.com/ultralytics/assets/releases/download/v0.0.0/VOCtrainval_06-Nov-2007.zip \
+    && unzip /app/datasets/VOCtrainval_06-Nov-2007.zip -d /app/datasets/ \
+    && rm /app/datasets/VOCtrainval_06-Nov-2007.zi
 
-RUN wget --no-check-certificate -O /app/datasets/coco128.zip https://github.com/ultralytics/assets/releases/download/v0.0.0/coco128.zip \
-    && unzip /app/datasets/coco128.zip -d /app/datasets/ \
-    && rm /app/datasets/coco128.zip
-
+# Запуск обработки данных (конвертация аннотаций в YOLO формат)
+RUN python /app/scripts/process_voc_data.py
 
 # Открываем порт 8000
 EXPOSE 8000
