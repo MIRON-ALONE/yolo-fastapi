@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse, Response, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import shutil
 import os
-from ultralytics import YOLO, settings
+from ultralytics import YOLO, settings, solutions
 import cv2
 
 app = FastAPI()
@@ -15,6 +15,12 @@ if __name__ == "__main__":
 print("training were successful")
 url = os.getenv("REQUEST_URL")
 
+cropper = solutions.ObjectCropper(
+    show=True,
+    model="yolo11n.pt", 
+    classes=[1, 2],  
+    crop_dir="app/uploads",  # Папка для сохраненных объектов
+)
 
 
 UPLOAD_DIR = "uploads"
@@ -42,34 +48,10 @@ async def upload_and_analize(file: UploadFile = File(...)):
     result =  results[0].plot
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
-# Access the results
-    for result in results:
-        xywh = result.boxes.xywh  # center-x, center-y, width, height
-        xywhn = result.boxes.xywhn  # normalized
-        xyxy = result.boxes.xyxy  # top-left-x, top-left-y, bottom-right-x, bottom-right-y
-        xyxyn = result.boxes.xyxyn  # normalized
-        names = [result.names[cls.item()] for cls in result.boxes.cls.int()]  # class name of each box
-        confs = result.boxes.conf 
-
-        print(f"---confs---: {confs}") # confidence score of each box
-
-    for result in results:
-        for box in result.boxes:
-            x1, y1, x2, y2 = box.xyxy.int().tolist()
-            class_name = result.names[int(box.cls)]
-            confidence = box.conf
-            label = f"{class_name} {confidence:.2f}"
-
-            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(image, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-    # Сохраняем итоговое изображение
-    output_path = os.path.join(UPLOAD_DIR, "output.jpg")
-    cv2.imwrite(output_path, image)
-    print("Image saved successfully")
-
+    results = cropper(image)
+   
     # Возвращаем ссылку на итоговое изображение
-    return {"filename": file.filename, "url": f"/files/output.jpg"}
+    return {"filename": file.filename, "url": "{app/uploads}"}
 
     #print(f"---save dir---: {result.save_dir}")
     #print(f"---results path---: {result.results_path}")
