@@ -42,6 +42,15 @@ async def upload_and_analize(file: UploadFile = File(...)):
     result =  results[0].plot
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
+# Access the results
+    for result in results:
+        xywh = result.boxes.xywh  # center-x, center-y, width, height
+        xywhn = result.boxes.xywhn  # normalized
+        xyxy = result.boxes.xyxy  # top-left-x, top-left-y, bottom-right-x, bottom-right-y
+        xyxyn = result.boxes.xyxyn  # normalized
+        names = [result.names[cls.item()] for cls in result.boxes.cls.int()]  # class name of each box
+        confs = result.boxes.conf 
+        print(f"---confs---: {confs}") # confidence score of each box
     #print(f"---save dir---: {result.save_dir}")
     #print(f"---results path---: {result.results_path}")
     #result_path = os.path.join(results.save_dir, results.path)
