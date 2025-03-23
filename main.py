@@ -9,6 +9,7 @@ import cv2
 app = FastAPI()
 settings.update({"datasets_dir": "/app/datasets/coco/images/train2017"})
 model = YOLO(model="yolov8n-cls.pt")
+#model = YOLO("runs/detect/train/weights/best.pt")
 if __name__ == "__main__":
     results = model.train(data="/app/datasets/coco/images/train2017", epochs=100, imgsz=640)
 print("training were successful")
@@ -37,7 +38,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     image = cv2.imread(file_location)
     #print(f"{image}")
     #print("image os.imread successfully")
-    results = model.predict(image, save=True)
+    results = model.predict(image, save=True, conf=0.01)
     result =  results[0].plot
     print(f"this is result: {result}") 
     print(f"Type of results: {type(result)}") 
