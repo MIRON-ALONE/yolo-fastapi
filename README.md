@@ -9,9 +9,9 @@ Dockerfile, process_voc_data, coco.yaml и docker compose собирают пр�
 @app.get("/files/") - получает список файлов в виде ссылок, вот пример:
 {
   "files": [
-    "https://yolo-fastapi-production.up.railway.app/uploads/crop_4.jpg",
-    "https://yolo-fastapi-production.up.railway.app/uploads/crop_8.jpg",
-    "https://yolo-fastapi-production.up.railway.app/uploads/crop_3.jpg",
+    "https://yolo-fastapi-production.up.railway.app/files/crop_4.jpg",
+    "https://yolo-fastapi-production.up.railway.app/files/crop_8.jpg",
+    "https://yolo-fastapi-production.up.railway.app/files/crop_3.jpg",
     ...
 
 main.py --> 
