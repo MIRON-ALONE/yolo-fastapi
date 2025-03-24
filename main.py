@@ -46,7 +46,7 @@ async def upload_and_analize(file: UploadFile = File(...)):
     results = cropper(image)
     print(f"Results: {results}")
 
-    return {"filename": file.filename, "url": "app/uploads"}
+    return {"results": results}
 
 @app.get("/files/")
 async def list_files():
